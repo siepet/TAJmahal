@@ -27,6 +27,8 @@ public class PsikusTest {
 	@Test
 	public void hultajchochlaTest() throws NieudanyPsikusException{
 		assertEquals((Integer)22, ps.hultajchochla(22));
+		assertThat(ps.hultajchochla(32), either(is(32)).or(is(23)));
+		assertThat(ps.hultajchochla(123), either(is(213)).or(is(321)).or(is(132)));
 	}
 	
 	@Test
@@ -35,6 +37,7 @@ public class PsikusTest {
 		assertEquals((Integer)8, ps.nieksztaltek(3));
 		assertThat(ps.nieksztaltek(53), is(58));
 		assertThat(ps.nieksztaltek(37), either(is(31)).or(is(87)));
+		assertThat(ps.nieksztaltek(367), either(is(867)).or(is(397)).or(is(361)));
 	}
 
 }
