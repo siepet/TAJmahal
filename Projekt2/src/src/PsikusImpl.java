@@ -69,7 +69,7 @@ public class PsikusImpl implements Psikus {
 		int wystepuje = 0;
 		int znalaz = 0;
 		String output = "";
-		int random = new Random().nextInt(100) % 3; // losuje albo 0>(3->8), albo 1>(7->1), albo 2>(6->9)
+		//int random = new Random().nextInt(100) % 3; // losuje albo 0>(3->8), albo 1>(7->1), albo 2>(6->9)
 		for(int i = 0; i < liczba.toString().length(); i++){
 			char c = liczba.toString().charAt(i);
 			if(znalaz == 0){
