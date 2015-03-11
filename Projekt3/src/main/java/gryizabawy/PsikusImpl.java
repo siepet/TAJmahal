@@ -28,6 +28,7 @@ public class PsikusImpl implements Psikus {
 	 * losowo zmienia wystapienie dwoch cyfr w argumencie
 	 * dla jednocyfrowej zwraca nieudanypsikusexception
 	 */
+
 	public Integer hultajchochla(Integer liczba) throws NieudanyPsikusException {
 		if(liczba.toString().length() == 1){
 			throw new NieudanyPsikusException();
