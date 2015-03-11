@@ -33,9 +33,8 @@ public class PsikusTest {
 	public void nieksztaltekTest(){
 		assertEquals((Integer)5, ps.nieksztaltek(5));
 		assertEquals((Integer)8, ps.nieksztaltek(3));
-		assertEquals((Integer)888, ps.nieksztaltek(333));
-		assertEquals((Integer)111, ps.nieksztaltek(777));
-		assertNotEquals((Integer)888, ps.nieksztaltek(123));
+		assertThat(ps.nieksztaltek(53), is(58));
+		assertThat(ps.nieksztaltek(37), either(is(31)).or(is(87)));
 	}
 
 }

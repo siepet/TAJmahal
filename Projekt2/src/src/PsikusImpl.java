@@ -19,7 +19,7 @@ public class PsikusImpl implements Psikus {
 				if(i != randomIndex){
 					asd = asd + liczba.toString().charAt(i);
 				} else {
-					asd = asd;
+					//asd = asd;
 				}
 			}
 			return Integer.parseInt(asd);
@@ -57,6 +57,7 @@ public class PsikusImpl implements Psikus {
 	}
 
 	/**
+	 * losowo zmienia 1 cyfre według schematu:
 	 * zmiania cyfry w argumencie kolejno:
 	 * 3 -> 8
      * 7 -> 1
@@ -64,6 +65,37 @@ public class PsikusImpl implements Psikus {
      * jesli nie wystepuja to zwraca liczbe
 	 */
 	@Override
+	public Integer nieksztaltek(Integer liczba){
+		int wystepuje = 0;
+		int znalaz = 0;
+		String output = "";
+		int random = new Random().nextInt(100) % 3; // losuje albo 0>(3->8), albo 1>(7->1), albo 2>(6->9)
+		for(int i = 0; i < liczba.toString().length(); i++){
+			char c = liczba.toString().charAt(i);
+			if(znalaz == 0){
+				if(c == '3'){
+					output = output + '8';
+					wystepuje = 1;
+					znalaz = 1;
+				} else if (c == '7'){
+					output = output + '1';
+					wystepuje = 1;
+					znalaz = 1;
+				} else if (c == '6') {
+					output = output + '9';
+					wystepuje = 1;
+					znalaz = 1;
+				} else {
+					output = output + c;
+				}
+			} else {
+				output = output + c;
+			}
+		}
+		
+		return (wystepuje == 1) ? Integer.parseInt(output) : liczba;
+	}
+	/*
 	public Integer nieksztaltek(Integer liczba) {
 		int wystepuje = 0;
 		String output = "";
@@ -84,5 +116,6 @@ public class PsikusImpl implements Psikus {
 		}
 		return (wystepuje == 1) ? Integer.parseInt(output) : liczba;
 	}
+	*/
 
 }
