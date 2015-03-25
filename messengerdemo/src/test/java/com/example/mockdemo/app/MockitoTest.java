@@ -2,14 +2,13 @@ package com.example.mockdemo.app;
 
 import com.example.mockdemo.messenger.*;
 
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+
 import org.junit.Before;
 import org.junit.Test;
+
 
 public class MockitoTest {
 	
@@ -52,6 +51,17 @@ public class MockitoTest {
 		assertEquals(2, myMessenger.sendMessage("wp.pl", "r"));
 	}
 	
+	@Test
+	public void testingTheConnectionSuccessfullyWithArgumentMatchers(){
+		when(mock.checkConnection(endsWith(".pl"))).thenReturn(ConnectionStatus.SUCCESS);
+		assertEquals(0, myMessenger.testConnection("wp.pl")); 
+	}
+	
+	@Test
+	public void testingTheConnectionNotSuccessfullyWithArgumentMatchers(){
+		when(mock.checkConnection("s")).thenReturn(ConnectionStatus.FAILURE);
+		assertEquals(1, myMessenger.testConnection("wp.com"));	
+	}
 	
 
 }
