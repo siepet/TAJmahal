@@ -72,7 +72,7 @@ public class DynamicProxyTest {
 				new Class[] { MessageService.class }, ih);
 
 		Messenger myMessage = new Messenger(msMock);
-		assertEquals(-1, myMessage.sendMessage("wp.pl.com", "radek"));
+		assertEquals(2, myMessage.sendMessage("wp.pl.com", "radek"));
 	}
 	
 	@Test
@@ -101,7 +101,14 @@ public class DynamicProxyTest {
 			}
 			
 			if("send".equals(method.getName())){
-				if(args[0].toString().length() > 3 && !args[1].toString().equals("radek")){
+				if(args[0].toString().equals("wp.pl.com") &&
+						args[1].toString().equals("radek")){
+					throw new MalformedRecipientException();
+				}
+			}
+			
+			if("send".equals(method.getName())){
+				if(args[0].toString().length() > 3 ){//&& !args[1].toString().equals("radek")){
 					if(args[0].toString().matches("[a-z].*.pl$")){
 						return SendingStatus.SENT;
 					} else if(!args[0].toString().matches("[a-z].*.pl$")) {
@@ -115,6 +122,7 @@ public class DynamicProxyTest {
 				}
 
 			}
+
 			
 			return 5;
 		}
