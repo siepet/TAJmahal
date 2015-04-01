@@ -19,7 +19,7 @@ public class Messenger {
 		case SUCCESS:
 			return 0;
 		}
-		return 1;
+		return 2;
 	}
 
 	public int sendMessage(String server, String message) {

@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Spy;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -15,6 +16,7 @@ import org.mockito.stubbing.Answer;
 
 public class MockitoTest {
 	
+	private static final String WP_PL = "wp.pl";
 	@Spy private Messenger myMessenger;
 	private MessageService mock;
 	
@@ -26,8 +28,8 @@ public class MockitoTest {
 	
 	@Test
 	public void testingTheConnectionSuccessfull(){
-		when(mock.checkConnection("wp.pl")).thenReturn(ConnectionStatus.SUCCESS);
-		assertEquals(0, myMessenger.testConnection("wp.pl"));
+		when(mock.checkConnection(WP_PL)).thenReturn(ConnectionStatus.SUCCESS);
+		assertEquals(0, myMessenger.testConnection(WP_PL));
 	}
 	
 	@Test
@@ -38,8 +40,8 @@ public class MockitoTest {
 	
 	@Test
 	public void testingSendingSuccessfully() throws MalformedRecipientException{
-		when(mock.send("wp.pl", "radek")).thenReturn(SendingStatus.SENT);
-		assertEquals(0, myMessenger.sendMessage("wp.pl", "radek"));
+		when(mock.send(WP_PL, "radek")).thenReturn(SendingStatus.SENT);
+		assertEquals(0, myMessenger.sendMessage(WP_PL, "radek"));
 	}
 	
 	@Test
@@ -50,14 +52,14 @@ public class MockitoTest {
 	
 	@Test
 	public void testingSendingWithException() throws MalformedRecipientException{
-		when(mock.send("wp.pl", "r")).thenThrow(new MalformedRecipientException());
-		assertEquals(2, myMessenger.sendMessage("wp.pl", "r"));
+		when(mock.send(WP_PL, "r")).thenThrow(new MalformedRecipientException());
+		assertEquals(2, myMessenger.sendMessage(WP_PL, "r"));
 	}
 	
 	@Test
 	public void testingTheConnectionSuccessfullyWithArgumentMatchers(){
 		when(mock.checkConnection(endsWith(".pl"))).thenReturn(ConnectionStatus.SUCCESS);
-		assertEquals(0, myMessenger.testConnection("wp.pl")); 
+		assertEquals(0, myMessenger.testConnection(WP_PL)); 
 	}
 	
 	@Test
@@ -78,7 +80,7 @@ public class MockitoTest {
 		};
 		
 		when(mock.checkConnection(anyString())).thenAnswer(answer);
-		assertEquals(0, myMessenger.testConnection("wp.pl"));		// testing for good
+		assertEquals(0, myMessenger.testConnection(WP_PL));		// testing for good
 		assertEquals(1, myMessenger.testConnection("wp.com"));		// testing for bad
 	}
 	
@@ -103,7 +105,7 @@ public class MockitoTest {
 		};
 		
 		when(mock.send(anyString(), anyString())).thenAnswer(answer);
-		assertEquals(0, myMessenger.sendMessage("wp.pl", "wiadomosc"));		// testing for good
+		assertEquals(0, myMessenger.sendMessage(WP_PL, "wiadomosc"));		// testing for good
 		assertEquals(1, myMessenger.sendMessage("wp.com", "wiadomosc"));	// testing for bad
 		assertEquals(2, myMessenger.sendMessage("wpl.pl", "asd"));			// testing for throw
 	}
@@ -111,10 +113,12 @@ public class MockitoTest {
 	@Test
 	public void testingCheckingTheConnectionSuccessWithCaptures(){
 		ArgumentCaptor<String> server = ArgumentCaptor.forClass(String.class);
-		when(mock.checkConnection("wp.pl")).thenReturn(ConnectionStatus.SUCCESS);
-		verify(mock).checkConnection(server.capture());
+		when(mock.checkConnection(WP_PL)).thenReturn(ConnectionStatus.SUCCESS);
+
 		
-		assertEquals(server.getValue(), "wp.pl");
+	
+		assertEquals(mock.checkConnection(WP_PL), ConnectionStatus.SUCCESS);
+		verify(mock).checkConnection(server.capture());
 	}
 
 
