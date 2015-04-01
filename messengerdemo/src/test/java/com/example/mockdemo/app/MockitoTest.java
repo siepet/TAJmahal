@@ -5,14 +5,17 @@ import com.example.mockdemo.messenger.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-
+import org.mockito.ArgumentCaptor;
+import org.mockito.Spy;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 
 public class MockitoTest {
 	
-	private Messenger myMessenger;
+	@Spy private Messenger myMessenger;
 	private MessageService mock;
 	
 	@Before
@@ -58,10 +61,65 @@ public class MockitoTest {
 	}
 	
 	@Test
-	public void testingTheConnectionNotSuccessfullyWithArgumentMatchers(){
-		when(mock.checkConnection("s")).thenReturn(ConnectionStatus.FAILURE);
-		assertEquals(1, myMessenger.testConnection("wp.com"));	
+	public void testingTheConnectionStatusWithAnswer(){
+		Answer<ConnectionStatus> answer = new Answer<ConnectionStatus>() {
+
+			@Override
+			public ConnectionStatus answer(InvocationOnMock invocation) throws Throwable {
+				Object[] arguments = invocation.getArguments();
+				//Object mock = invocation.getMock();
+				if(arguments[0].toString().endsWith("pl")){
+					return ConnectionStatus.SUCCESS;
+				} else {
+					return ConnectionStatus.FAILURE;
+				}
+			}
+			
+		};
+		
+		when(mock.checkConnection(anyString())).thenAnswer(answer);
+		assertEquals(0, myMessenger.testConnection("wp.pl"));		// testing for good
+		assertEquals(1, myMessenger.testConnection("wp.com"));		// testing for bad
 	}
+	
+	@Test
+	public void testingTheSendingStatusWithAnswer() throws MalformedRecipientException {
+		Answer<SendingStatus> answer = new Answer<SendingStatus>() {
+
+			@Override
+			public SendingStatus answer(InvocationOnMock invocation) throws Throwable {
+				Object[] arguments = invocation.getArguments();
+				//Object mock = invocation.getMock();
+				if(arguments[0].toString().endsWith("pl")){
+					if(arguments[1].toString().length() < 4) {
+						throw new MalformedRecipientException();
+					}
+					return SendingStatus.SENT;
+				} else {
+					return SendingStatus.SENDING_ERROR;
+				}
+			}
+			
+		};
+		
+		when(mock.send(anyString(), anyString())).thenAnswer(answer);
+		assertEquals(0, myMessenger.sendMessage("wp.pl", "wiadomosc"));		// testing for good
+		assertEquals(1, myMessenger.sendMessage("wp.com", "wiadomosc"));	// testing for bad
+		assertEquals(2, myMessenger.sendMessage("wpl.pl", "asd"));			// testing for throw
+	}
+	
+	@Test
+	public void testingCheckingTheConnectionSuccessWithCaptures(){
+		ArgumentCaptor<String> server = ArgumentCaptor.forClass(String.class);
+		when(mock.checkConnection("wp.pl")).thenReturn(ConnectionStatus.SUCCESS);
+		verify(mock).checkConnection(server.capture());
+		
+		assertEquals(server.getValue(), "wp.pl");
+	}
+
+
+	
+
 	
 
 }
