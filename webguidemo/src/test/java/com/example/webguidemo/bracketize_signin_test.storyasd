@@ -1,0 +1,6 @@
+Scenario: User can successfully login to the page.
+
+Given user is on SignIn page
+When user fills login field
+And fills password field
+Then Home page is displayed.
