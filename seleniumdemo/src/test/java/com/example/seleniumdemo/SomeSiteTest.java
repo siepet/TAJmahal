@@ -1,7 +1,6 @@
 package com.example.seleniumdemo;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +16,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class SomeSiteTest {
@@ -34,27 +34,87 @@ public class SomeSiteTest {
 
 	@Test
 	public void homePage(){
-		driver.get("http://www.teleman.pl");
-		
-		element = driver.findElement(By.linkText("Polsat"));
-		assertNotNull(element);
+		driver.get("http://codebros.pl:666/");		
+		assertEquals("Bracketize! - main page", driver.getTitle());
 	}
 	
-	public void polsatPage(){
-		driver.get("http://www.teleman.pl/");
-		driver.findElement(By.linkText("Polsat")).click();
-		element = driver.findElement(By.linkText("Polsat"));
+	@Test
+	public void loginPage(){
+		driver.get("http://codebros.pl:666");
+		element = driver.findElement(By.cssSelector("#navbar > form > input"));
+		element.click();
+		assertEquals("Bracketize!", driver.getTitle());
+	}
+	
+	@Test
+	public void successfullLoginHomePage(){
+		
+		driver.get("http://codebros.pl:666");
+		driver.findElement(By.cssSelector("#session_login")).sendKeys("admin");
+		driver.findElement(By.cssSelector("#session_password")).sendKeys("admin123");
+		driver.findElement(By.cssSelector("#navbar > form > input")).click();
+		element = driver.findElement(By.cssSelector("body > div"));
+		assertEquals("You have successfully logged in!", element.getText());
+		
+		driver.get("http://codebros.pl:666/signout");
+		element = driver.findElement(By.cssSelector("body > div"));
+		assertEquals("You have successfully logged out!", element.getText());
+		
+	}
+	
+	
+	@Test
+	public void unsuccessfullLoginHomePage(){
+		
+		driver.get("http://codebros.pl:666");
+		driver.findElement(By.cssSelector("#session_login")).sendKeys("admin123");
+		driver.findElement(By.cssSelector("#session_password")).sendKeys("admin121233");
+		driver.findElement(By.cssSelector("#navbar > form > input")).click();
+		element = driver.findElement(By.cssSelector("body > div"));
+		assertEquals("Wrong login/password combination!", element.getText());		
+	}
+	
+	@Test
+	public void screenshotFadeFlashMessageVisible(){		
+		driver.get("http://codebros.pl:666");
+		driver.findElement(By.cssSelector("#session_login")).sendKeys("admin");
+		driver.findElement(By.cssSelector("#session_password")).sendKeys("admin123");
+		driver.findElement(By.cssSelector("#navbar > form > input")).click();
 		File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-	    assertNotNull(screenshot);
-
+		assertNotNull(screenshot);
+		
 		try {
-			FileUtils.copyFile(screenshot, new File("polsat.png"));
-		} catch (IOException e) {
+			FileUtils.copyFile(screenshot, new File("flashVisible.png"));
+		} catch (IOException e){
 			e.printStackTrace();
 		}
 		assertTrue(true);
+		driver.get("http://codebros.pl:666/signout");
+		element = driver.findElement(By.cssSelector("body > div"));
+		assertEquals("You have successfully logged out!", element.getText());
 	}
-
+	
+	@Test
+	public void screenshotFadeFlashMessageInvisible() throws InterruptedException{		
+		driver.get("http://codebros.pl:666");
+		driver.findElement(By.cssSelector("#session_login")).sendKeys("admin");
+		driver.findElement(By.cssSelector("#session_password")).sendKeys("admin123");
+		driver.findElement(By.cssSelector("#navbar > form > input")).click();
+		Thread.sleep(2000);
+		File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		assertNotNull(screenshot);
+		
+		try {
+			FileUtils.copyFile(screenshot, new File("flashInvisible.png"));
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		assertTrue(true);
+		driver.get("http://codebros.pl:666/signout");
+		element = driver.findElement(By.cssSelector("body > div"));
+		assertEquals("You have successfully logged out!", element.getText());
+	}
+	
 	@AfterClass
 	public static void cleanp() {
 		driver.quit();
