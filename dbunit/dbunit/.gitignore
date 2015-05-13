@@ -18,3 +18,4 @@
 
 # External tool builders
 #`:.externalToolBuilders/
+/target/
