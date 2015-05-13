@@ -1,0 +1,19 @@
+{
+	"title": "Person",
+	"type": "object",
+	"properties": {
+		"firstName": {
+			"type": "string"
+			"minLength": 5
+		},
+		"id": {
+			"type": "string"
+		},
+		"yob": {
+			"description": "YOB",
+			"type": "string",
+			"minLength": 2
+		}
+	},
+	"required": ["firstName", "id" , "yob"]
+}

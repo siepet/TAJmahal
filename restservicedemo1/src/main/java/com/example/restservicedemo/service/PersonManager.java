@@ -102,11 +102,31 @@ public class PersonManager {
 		}
 		return persons;
 	}
+	
+	public List<Person> getPersonsByID() {
+		List<Person> persons = new ArrayList<Person>();
 
-	public Person getPerson(Long id) {
+		try {
+			ResultSet rs = getAllPersonsStmt.executeQuery();
+
+			while (rs.next()) {
+				Person p = new Person();
+				p.setId(rs.getInt("id"));
+				p.setFirstName(rs.getString("name"));
+				p.setYob(rs.getInt("yob"));
+				persons.add(p);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return persons;
+	}
+
+	public Person getPerson(int i) {
 		Person p = new Person();
 		try {
-			getPersonByIdStmt.setLong(1, id);
+			getPersonByIdStmt.setLong(1, i);
 			ResultSet rs = getPersonByIdStmt.executeQuery();
 
 			while (rs.next()) {
@@ -121,6 +141,26 @@ public class PersonManager {
 		}
 
 		return p;
+	}
+	
+	public String getPersonName(int i) {
+		Person p = new Person();
+		try {
+			getPersonByIdStmt.setLong(1, i);
+			ResultSet rs = getPersonByIdStmt.executeQuery();
+
+			while (rs.next()) {
+				p.setId(rs.getInt("id"));
+				p.setFirstName(rs.getString("name"));
+				p.setYob(rs.getInt("yob"));
+				break;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return p.getFirstName();
 	}
 
 }
