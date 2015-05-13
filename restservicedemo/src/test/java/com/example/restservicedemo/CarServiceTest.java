@@ -39,7 +39,7 @@ public class CarServiceTest {
 		given().
 		       contentType("application/json; charset=UTF-16").
 		       body(aCar).
-		when().	     
+		when().
 		post("/cars/").then().assertThat().
 		statusCode(201).
 		body(containsString("Car saved:"));
