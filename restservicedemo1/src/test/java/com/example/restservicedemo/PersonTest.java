@@ -50,12 +50,10 @@ public class PersonTest {
 	}
 	
     @Test 
-    public void json_schema() {
+    public void json_schema_test() {
     	
     	InputStream schema = Thread.currentThread().getContextClassLoader().getResourceAsStream("PersonSchemaJSON.json");
-    	
-
-        when().
+    	when().
                 get("/persons/3").
         then().
                 body(matchesJsonSchema(schema)).
