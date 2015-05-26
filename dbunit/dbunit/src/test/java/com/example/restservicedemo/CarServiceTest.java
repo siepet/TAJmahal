@@ -3,47 +3,70 @@ package com.example.restservicedemo;
 import static com.jayway.restassured.RestAssured.get;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.equalToIgnoringCase;
+import static org.hamcrest.Matchers.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.example.restservicedemo.domain.Car;
+import com.example.restservicedemo.domain.Person;
+import com.example.restservicedemo.service.CarManager;
+import com.example.restservicedemo.service.CarPersonManager;
+import com.example.restservicedemo.service.PersonManager;
 import com.jayway.restassured.RestAssured;
 
 public class CarServiceTest {
-	
+
+	CarManager cm = new CarManager();
+	PersonManager pm = new PersonManager();
+	CarPersonManager cpm = new CarPersonManager();
+
 	@BeforeClass
 	public static void setUp(){
 		RestAssured.baseURI = "http://localhost";
 		RestAssured.port = 8080;
 		RestAssured.basePath = "/restservicedemo";
 	}
-	
+
 	@Test
 	public void getCar(){
+
+		cm.addCar(new Car(1, "Opel", "Corsa", 1990));
+
 		get("/cars/0").then().assertThat().body("model", equalTo("Corsa"));
-		
-		
+
+
 		Car aCar = get("/cars/0").as(Car.class);
-		
+
 		assertThat(aCar.getMake(), equalToIgnoringCase("Opel"));
+
 	}
-	
+
 	@Test
-	public void addCar(){
-		
-		Car aCar = new Car(2, "Ford", "Fiesta", 2011);
-		given().
-		       contentType("application/json; charset=UTF-16").
-		       body(aCar).
-		when().	     
-		post("/cars/").then().assertThat().
-		statusCode(201).
-		body(containsString("Car saved:"));
+	public void getPersonCars(){
+		Car car1 = new Car(1, "Skoda", "Oktawja", 1990);
+		Car car2 = new Car(2, "Fiat", "Castro", 1991);
+		Person radek = new Person(5, "Radek", 1992);
+		pm.addPerson(radek);
+		cm.addCar(car1);
+		cm.addCar(car2);
+		cpm.addCarToPerson(car1, radek);
+		cpm.addCarToPerson(car2, radek);
+		radek.setCars(cpm.getAllPersonCars(radek.getId()));
+
+		assertThat(get("/persons/"+radek.getId()).getBody().path("cars[0]"),
+				equalTo(get("/cars/"+car1.getId()).getBody().path(".")));
+		assertThat(get("/persons/"+radek.getId()).getBody().path("cars[1]"),
+				equalTo(get("/cars/"+car2.getId()).getBody().path(".")));
+
 	}
-	
+	@AfterClass
+	public static void clearUp(){
+		CarManager cm = new CarManager();
+		CarPersonManager cpm = new CarPersonManager();
+		cm.clearCars();
+		cpm.clearCarPersons();
+	}
 
 }

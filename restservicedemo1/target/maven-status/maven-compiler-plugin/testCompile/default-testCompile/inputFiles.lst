@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-/home/student/TAJmahal/restservicedemo1/src/test/java/com/example/restservicedemo/CarServiceTest.java
-/home/student/TAJmahal/restservicedemo1/src/test/java/com/example/restservicedemo/PersonTest.java
-=======
-/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/test/java/com/example/restservicedemo/CarServiceTest.java
-/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/test/java/com/example/restservicedemo/PersonTest.java
->>>>>>> update
+/Users/marcinsiepetowski/school/java/TAJmahal/restservicedemo1/src/test/java/com/example/restservicedemo/PersonTest.java
+/Users/marcinsiepetowski/school/java/TAJmahal/restservicedemo1/src/test/java/com/example/restservicedemo/CarServiceTest.java

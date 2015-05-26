@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.restservicedemo.domain.Person;
-
+import com.example.restservicedemo.domain.Car;
 public class PersonManager {
 
 	private Connection connection;
@@ -95,7 +95,7 @@ public class PersonManager {
 				p.setFirstName(rs.getString("name"));
 				p.setYob(rs.getInt("yob"));
 				persons.add(p);
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -123,5 +123,23 @@ public class PersonManager {
 
 		return p;
 	}
-
+        public Person getPersonWithCars(Long id) {
+          Person p = new Person();
+          try {
+              getPersonByIdStmt.setLong(1, id);
+              ResultSet rs = getPersonByIdStmt.executeQuery();
+              CarPersonManager cpm = new CarPersonManager();
+              List<Car> cars = cpm.getAllPersonCars(id);
+              while (rs.next()) {
+                  p.setId(rs.getInt("id"));
+                  p.setFirstName(rs.getString("name"));
+                  p.setYob(rs.getInt("yob"));
+                  p.setCars(cars);
+                  break;
+              }
+          } catch (SQLException e) {
+              e.printStackTrace();
+          }
+          return p;
+        }
 }

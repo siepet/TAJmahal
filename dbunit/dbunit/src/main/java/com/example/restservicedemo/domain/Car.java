@@ -1,15 +1,17 @@
 package com.example.restservicedemo.domain;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Car {
-	
+
 	private long id;
 	private String make;
-	private String model;	
+	private String model;
 	private int yop;
-	
+        private List<Person> owners;
+
 	public Car(long id, String make, String model, int yop) {
 		super();
 		this.id = id;
@@ -17,7 +19,13 @@ public class Car {
 		this.model = model;
 		this.yop = yop;
 	}
-	
+
+        public Car(String make, String model, int yop) {
+          this.make = make;
+          this.model = model;
+          this.yop = yop;
+        }
+
 	public Car() {
 	}
 
@@ -45,5 +53,10 @@ public class Car {
 	public void setYop(int yop) {
 		this.yop = yop;
 	}
-	
+        public List<Person> getOwners() {
+          return owners;
+        }
+        public void setOwners(List<Person> owners) {
+          this.owners = owners;
+        }
 }

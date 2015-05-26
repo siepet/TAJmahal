@@ -13,10 +13,10 @@ import com.example.restservicedemo.domain.Person;
 import com.example.restservicedemo.service.PersonManager;
 
 @Path("persons")
-public class PersonRESTService {	
-	
+public class PersonRESTService {
+
 	private PersonManager pm = new PersonManager();
-	
+
 	@GET
 	@Path("/{personId}")
 	@Produces("application/json")
@@ -24,21 +24,21 @@ public class PersonRESTService {
 		Person p = pm.getPerson(id);
 		return p;
 	}
-	
+
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addPerson(Person person){
 		System.out.println("Person" + person.getFirstName());
 		pm.addPerson(person);
-		return Response.status(201).entity(person).build(); 
+		return Response.status(201).entity(person).build();
 	}
-	
+
 	@GET
 	@Path("/test")
 	@Produces("text/html")
 	public String test(){
-		return "REST Service is running";
+		return "REST Service is running !";
 	}
 
 }
