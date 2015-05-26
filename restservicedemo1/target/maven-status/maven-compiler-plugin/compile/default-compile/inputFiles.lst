@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 /home/student/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/domain/Car.java
 /home/student/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/rest/CarFakeRESTService.java
 /home/student/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/rest/PersonRESTService.java
 /home/student/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/service/PersonManager.java
 /home/student/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/domain/Person.java
+=======
+/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/rest/CarFakeRESTService.java
+/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/domain/Person.java
+/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/rest/PersonRESTService.java
+/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/service/PersonManager.java
+/home/studinf/msiepetowski/Dokumenty/TAJmahal/restservicedemo1/src/main/java/com/example/restservicedemo/domain/Car.java
+>>>>>>> update
