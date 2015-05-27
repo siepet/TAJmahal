@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.restservicedemo.domain.Car;
-import com.example.restservicedemo.domain.CarhasPerson;
+import com.example.restservicedemo.domain.CarPerson;
 import com.example.restservicedemo.domain.Person;
 
-public class CarToPersonManager {
+public class CarPersonManager {
 
 	private Connection connection;
 
@@ -31,7 +31,7 @@ public class CarToPersonManager {
 	
 	private Statement statement;
 
-	public CarToPersonManager() {
+	public CarPersonManager() {
 		try {
 			connection = DriverManager.getConnection(URL);
 			statement = connection.createStatement();
@@ -93,14 +93,14 @@ public class CarToPersonManager {
 		return count;
 	}
 
-	public List<CarhasPerson> getAllCars() {
-		List<CarhasPerson> Stmt = new ArrayList<CarhasPerson>();
+	public List<CarPerson> getAllCars() {
+		List<CarPerson> Stmt = new ArrayList<CarPerson>();
 
 		try {
 			ResultSet rs = getAllCarsToPersonStmt.executeQuery();
 
 			while (rs.next()) {
-				CarhasPerson p = new CarhasPerson();
+				CarPerson p = new CarPerson();
 				p.setIdCar(rs.getInt("idcar"));
 				p.setIdPerson(rs.getInt("idperson"));
 				Stmt.add(p);

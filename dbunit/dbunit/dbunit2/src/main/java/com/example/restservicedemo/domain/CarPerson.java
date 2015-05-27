@@ -2,7 +2,7 @@ package com.example.restservicedemo.domain;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class CarhasPerson {
+public class CarPerson {
 	private long idPerson;
 	private long idCar;
 	

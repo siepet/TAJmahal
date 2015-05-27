@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.restservicedemo.domain.Car;
-import com.example.restservicedemo.domain.CarhasPerson;
+import com.example.restservicedemo.domain.CarPerson;
 import com.example.restservicedemo.domain.Person;
 
 public class PersonManager {
@@ -109,7 +109,7 @@ public class PersonManager {
 
 	public Person getPerson(Long id) {
 		Person p = new Person();
-		CarToPersonManager cpm = new CarToPersonManager();
+		CarPersonManager cpm = new CarPersonManager();
 		try {
 			getPersonByIdStmt.setLong(1, id);
 			ResultSet rs = getPersonByIdStmt.executeQuery();
@@ -134,7 +134,7 @@ public class PersonManager {
 		try {
 			getPersonByIdStmt.setLong(1, id);
 			ResultSet rs = getPersonByIdStmt.executeQuery();
-			CarToPersonManager ctpm = new CarToPersonManager();
+			CarPersonManager ctpm = new CarPersonManager();
 			List<Car> cars = ctpm.getAllPersonCars(id);
 			while (rs.next()) {
 				p.setId(rs.getInt("id"));

@@ -12,7 +12,7 @@ import org.junit.Test;
 import com.example.restservicedemo.domain.Car;
 import com.example.restservicedemo.domain.Person;
 import com.example.restservicedemo.service.CarManager;
-import com.example.restservicedemo.service.CarToPersonManager;
+import com.example.restservicedemo.service.CarPersonManager;
 import com.example.restservicedemo.service.PersonManager;
 import com.jayway.restassured.RestAssured;
 
@@ -20,7 +20,7 @@ public class CarServiceTest {
 	
 	CarManager cm = new CarManager();
 	PersonManager pm = new PersonManager();
-	CarToPersonManager ctpm = new CarToPersonManager();
+	CarPersonManager ctpm = new CarPersonManager();
 	
 	@BeforeClass
 	public static void setUp(){
@@ -66,7 +66,7 @@ public class CarServiceTest {
 	@AfterClass
 	public static void clearUp(){
 		CarManager cm = new CarManager();
-		CarToPersonManager ctpm = new CarToPersonManager();
+		CarPersonManager ctpm = new CarPersonManager();
 		cm.clearCars();
 		ctpm.clearCarstoPersons();
 	}	

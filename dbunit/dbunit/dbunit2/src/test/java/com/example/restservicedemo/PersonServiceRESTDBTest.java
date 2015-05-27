@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import com.example.restservicedemo.domain.Car;
 import com.example.restservicedemo.domain.Person;
-import com.example.restservicedemo.service.CarToPersonManager;
+import com.example.restservicedemo.service.CarPersonManager;
 import com.example.restservicedemo.service.PersonManager;
 import com.jayway.restassured.RestAssured;
 
@@ -77,7 +77,7 @@ public class PersonServiceRESTDBTest {
 		given().contentType("application/json; charset=UTF-16").body(aCar)
 		.when().post("/cars/").then().assertThat().statusCode(201);
 		
-		CarToPersonManager ctpm = new CarToPersonManager();
+		CarPersonManager ctpm = new CarPersonManager();
 		PersonManager pm = new PersonManager();
 		
 		ctpm.addCarToPerson(aCar, pm.getPerson(aPerson.getId()));
