@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="com.example.restservicedemo.CarServiceTest" time="2.7" errors="0" skipped="0">
+<testsuite tests="3" failures="0" name="com.example.restservicedemo.CarServiceTest" time="2.785" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre/lib"/>
@@ -63,7 +63,7 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.example.restservicedemo.CarServiceTest" name="getCar" time="2.129"/>
-  <testcase classname="com.example.restservicedemo.CarServiceTest" name="addCar" time="0.427"/>
-  <testcase classname="com.example.restservicedemo.CarServiceTest" name="getPersonFromCar" time="0.144"/>
+  <testcase classname="com.example.restservicedemo.CarServiceTest" name="getPersonFromCar" time="1.615"/>
+  <testcase classname="com.example.restservicedemo.CarServiceTest" name="addCar" time="0.846"/>
+  <testcase classname="com.example.restservicedemo.CarServiceTest" name="getCar" time="0.324"/>
 </testsuite>

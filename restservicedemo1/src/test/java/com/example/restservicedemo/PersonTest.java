@@ -34,7 +34,7 @@ public class PersonTest {
 	
 	@Test
 	public void addPerson(){
-		InputStream schema = Thread.currentThread().getContextClassLoader().getResourceAsStream("PersonSchemaJSON.json");
+		
 		Person aPerson = new Person(4, "Kuba", 1410);
 		given().
 		       contentType("application/json; charset=UTF-16").
